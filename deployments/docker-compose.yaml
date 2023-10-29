@@ -11,6 +11,19 @@ services:
       - ../configs:/app/configs
     depends_on:
       - redis
+    networks:
+      - weather_app
   redis:
     image: redis
+    volumes:
+      - redis_data:/data
+    networks:
+      - weather_app
 
+volumes:
+  redis_data:
+    driver: local
+
+networks:
+  weather_app:
+    driver: bridge
