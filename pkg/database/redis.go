@@ -2,6 +2,7 @@ package database
 
 import (
     "fmt"
+    "time"
     "context"
 
     "tempestas/internal/config"
@@ -10,7 +11,8 @@ import (
 )
 
 type redisDB struct {
-    client    *redis.Client
+    client                  *redis.Client
+    expirationInterval      time.Duration
 }
 
 func NewRedis(conf config.RedisConfig) (Database, error) {
@@ -28,13 +30,15 @@ func NewRedis(conf config.RedisConfig) (Database, error) {
         return nil, &ErrCreateDatabase{}
     }
 
-    return &redisDB{client}, nil
+    expiration := time.Duration(conf.ExpirationInterval) * time.Second
+
+    return &redisDB{client, expiration}, nil
 }
 
 func (rdb *redisDB) Set(key string, val string) (string, error) {
     ctx := context.Background()
 
-    err := rdb.client.Set(ctx, key, val, 0).Err()
+    err := rdb.client.Set(ctx, key, val, rdb.expirationInterval).Err()
     if err == redis.Nil {
         return "", &ErrOperation{"set"}
     } else if err != nil {

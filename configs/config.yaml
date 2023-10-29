@@ -6,7 +6,8 @@ redis:
   address: redis
   password: ""
   db: 0
+  expiration_interval: 10
 
-weather-api:
-  api-key: "ab0Xr+g8qpDcDQGLPOrzyw==2WzeXru1rpoFiFIY"
+weather_api:
+  api_key: "ab0Xr+g8qpDcDQGLPOrzyw==2WzeXru1rpoFiFIY"
 

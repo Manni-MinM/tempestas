@@ -7,22 +7,23 @@ import (
 type Config struct {
     Redis           RedisConfig         `mapstructure:"redis"`
     Server          ServerConfig        `mapstructure:"server"`
-    WeatherAPI      WeatherAPIConfig    `mapstructure:"weather-api"`
+    WeatherAPI      WeatherAPIConfig    `mapstructure:"weather_api"`
 }
 
 type ServerConfig struct {
-    Port             int        `mapstructure:"port"`
+    Port    int     `mapstructure:"port"`
 }
 
 type RedisConfig struct {
-    Port        int       `mapstructure:"port"`
-    Addr        string    `mapstructure:"address"`
-    Password    string    `mapstructure:"password"`
-    DB          string    `mapstructure:"db"`
+    Port                int       `mapstructure:"port"`
+    Addr                string    `mapstructure:"address"`
+    Password            string    `mapstructure:"password"`
+    DB                  string    `mapstructure:"db"`
+    ExpirationInterval  int       `mapstructure:"expiration_interval"`
 }
 
 type WeatherAPIConfig struct {
-    WeatherApiKey   string     `mapstructure:"api-key"`
+    WeatherApiKey   string     `mapstructure:"api_key"`
 }
 
 func LoadConfig() (*Config, error) {
