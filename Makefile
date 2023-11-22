@@ -12,7 +12,8 @@ test:
 
 .PHONY: image
 image:
-	docker build -f build/package/Dockerfile -t tempestas:v1.0.0 .
+	docker build -f build/package/Dockerfile -t tempestas:$(IMAGE_VERSION) .
+	docker image tag tempestas:$(IMAGE_VERSION) tempestas:latest
 
 .PHONY: compose-up
 compose-up:
@@ -22,3 +23,4 @@ compose-up:
 compose-down:
 	docker-compose -f deployments/docker-compose.yaml down --rmi=local
 
+IMAGE_VERSION := v1.0.0
